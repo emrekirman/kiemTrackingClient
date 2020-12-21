@@ -1,0 +1,77 @@
+<div class="p-grid p-justify-center">
+  <div class="p-col-12">
+    <p-panel header="Giriş Çıkışlar">
+      <div class="p-grid">
+        <div class="p-col-12 p-sm-12 p-md-9">
+          <form #girisCikis="ngForm" (ngSubmit)="ara()">
+            <div class="p-fluid p-formgrid p-grid">
+              <div class="p-field p-col p-md-2">
+                <label>Ürün: </label>
+                <p-autoComplete [(ngModel)]="selectedStok" [suggestions]="filtreliStoklar"
+                  (completeMethod)="searchStok($event)" field="tanim" #stok="ngModel" name="selectedStok" required>
+                  <ng-template let-item pTemplate="item">
+                    <div>{{item.depoKod}} {{item.tanim}}</div>
+                  </ng-template>
+                </p-autoComplete>
+              </div>
+              <div class="p-field p-col p-md-2">
+                <label>Başlangıç</label>
+                <p-calendar name="baslangicTarih" [(ngModel)]="baslangicTarih" [locale]="en"
+                  dateFormat="dd/mm/yy" [showIcon]="true" readonlyInput="true">
+                </p-calendar>
+              </div>
+              <div class="p-field p-col p-md-2">
+                <label>Bitiş</label>
+                <p-calendar name="bitisTarih" [(ngModel)]="bitisTarih" [locale]="en"
+                  dateFormat="dd/mm/yy" [showIcon]="true" readonlyInput="true">
+                </p-calendar>
+              </div>
+              <div class="p-field p-col p-md-2">
+                <label style="color: white;">asdasd</label>
+                <button pButton pRipple type="submit" label="Bul" icon="pi pi-search" iconPos="left"
+                [disabled]="girisCikis.invalid||stok.pristine" class="p-button-primary"></button>
+              </div>
+              <div class="p-field p-col p-md-2">
+                <label style="color: white;">asdasd</label>
+                <button pButton pRipple type="button" label="Rapor" icon="pi pi-file-excel" iconPos="left"
+                  [disabled]="!(data.length>0)" (click)="download()" class="p-button-success"></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="p-grid">
+        <div class="p-col-12 p-text-center" *ngIf="data.length>0">
+          <p-table [value]="data" [paginator]="true" [rows]="15" [showCurrentPageReport]="true"
+            currentPageReportTemplate="" styleClass="p-datatable-sm" selectionMode="single">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Giriş</th>
+                <th pSortableColumn="fisNo">Fiş No <p-sortIcon field="fisNo"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fisTarih">Fiş Tarih <p-sortIcon field="fisTarih"></p-sortIcon>
+                </th>
+                <th pSortableColumn="birimFiyat">Birim Fiyat <p-sortIcon field="birimFiyat"></p-sortIcon>
+                </th>
+                <th pSortableColumn="miktar">Miktar <p-sortIcon field="miktar"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tutar">Tutar <p-sortIcon field="tutar"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td><i [ngClass]="item.giris?'pi pi-check':'pi pi-times'"></i></td>
+                <td>{{item.fisNo}}</td>
+                <td>{{item.fisTarih | date:'d.MM.yyyy'}}</td>
+                <td>{{item.birimFiyat}}</td>
+                <td>{{item.miktar}}</td>
+                <td>{{item.tutar}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </p-panel>
+  </div>
+</div>

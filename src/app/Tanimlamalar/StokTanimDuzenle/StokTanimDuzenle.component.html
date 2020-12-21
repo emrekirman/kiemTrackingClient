@@ -1,0 +1,17 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="p-fluid">
+      <form #form="ngForm" (ngSubmit)="updateStokTanim()">
+        <div class="p-field">
+          <label for="tanim" class="p-col-fixed">Ölçü Birimi Adı</label>
+          <input id="tanim" type="text" name="tanim" #tanim="ngModel" pInputText [(ngModel)]="model.tanim" required>
+        </div>
+        <div class="p-field">
+          <button pButton pRaised type="submit" [disabled]="tanim.invalid" icon="pi pi-check" class="p-button-success" label="Kaydet"
+            iconPos="left"></button>
+        </div>
+      </form>
+    </div>
+    <p-messages [(value)]="msgs"></p-messages>
+  </div>
+</div>

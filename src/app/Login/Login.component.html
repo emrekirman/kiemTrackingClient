@@ -1,0 +1,32 @@
+<div class="p-fluid p-grid p-align-center p-justify-center">
+  <div class="p-col-9 p-md-3 p-xs-6">
+    <p-panel header="Sisteme Giriş Yapınız">
+      <form #loginForm="ngForm" (ngSubmit)="giris(loginForm)">
+        <div class="p-field">
+          <span class="p-input-icon-left">
+            <i class="pi pi-user"></i>
+            <input type="text" #kullaniciAd="ngModel" name="kullaniciAd" [(ngModel)]="model.kullaniciAd" pInputText
+              required>
+          </span>
+        </div>
+        <div class="p-field">
+          <span class="p-input-icon-left">
+            <i class="pi pi-key"></i>
+            <input type="password" #password="ngModel" name="password" [(ngModel)]="model.sifre" pInputText required>
+          </span>
+        </div>
+        <div class="p-field">
+          <label for="calismaYili">Çalışma Yılı</label>
+          <span class="p-input">
+            <input id="calismaYili" name="calismaYili" #calisma="ngModel" type="number" pInputText
+              [(ngModel)]="calismaYili" (change)="yilDegis()" required>
+          </span>
+        </div>
+        <div class="p-field">
+          <button pButton pRipple [disabled]="loginForm.invalid" type="submit" label="Giriş" icon="pi pi-check"
+            class="p-button-success"></button>
+        </div>
+      </form>
+    </p-panel>
+  </div>
+</div>

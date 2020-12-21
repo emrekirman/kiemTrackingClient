@@ -1,0 +1,12 @@
+<p-menubar [model]="items" styleClass="menubarScope" class="p-shadow-12">
+    <ng-template pTemplate="start">
+        <button pButton (click)="degistir()" pRipple type="button" class="p-button-secondary p-button-text yanMenu"
+            icon="pi pi-bars"></button>
+    </ng-template>
+    <label>
+        Hoşgeldin {{adSoyad}}
+    </label>
+</p-menubar>
+<p-sidebar [(visible)]="visibleSidebar1" styleClass="p-sideBar">
+    <p-panelMenu [model]="items" styleClass="p-panelmenu2" [style]="{'width':'100%'}"></p-panelMenu>
+</p-sidebar>

@@ -1,0 +1,58 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <p-panel header="Fatura Girişi Listesi">
+      <p-table #dt [value]="data" [contextMenu]="cm" [(contextMenuSelection)]="selectedDepoFis"
+        styleClass="p-datatable-sm" dataKey="fisNo" responsive="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Fiş No</th>
+            <th>Fiş Tarih</th>
+            <th>Açıklama</th>
+            <th>İşlem Çeşidi</th>
+            <th>Cari</th>
+          </tr>
+            <tr>
+              <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'fisNo', 'startsWith')"
+                  placeholder="Ara" class="p-column-filter p-button-sm p-d-sm-none p-d-none p-d-md-block p-d-xl-block">
+              </th>
+              <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'fisTarih', 'startsWith')"
+                  placeholder="Ara" class="p-column-filter p-button-sm p-d-sm-none p-d-none p-d-md-block p-d-xl-block">
+              </th>
+              <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'aciklama', 'startsWith')"
+                  placeholder="Ara" class="p-column-filter p-button-sm p-d-sm-none p-d-none p-d-md-block p-d-xl-block">
+              </th>
+              <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'islemCesidiTanim', 'startsWith')"
+                  placeholder="Ara" class="p-column-filter p-button-sm p-d-sm-none p-d-none p-d-md-block p-d-xl-block">
+              </th>
+              <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'cariAd', 'startsWith')"
+                  placeholder="Ara" class="p-column-filter p-button-sm p-d-sm-none p-d-none p-d-md-block p-d-xl-block">
+              </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-expanded="expanded">
+          <tr [pContextMenuRow]="item">
+            <td>{{item?.fisNo}}</td>
+            <td>{{item?.fisTarih | date:'d.MM.yyyy'}}</td>
+            <td>{{item?.aciklama}}</td>
+            <td>{{item?.islemCesidiTanim}}</td>
+            <td>{{item?.cariAd}}</td>
+            <div class="p-d-md-none p-d-xl-none">
+              <td>
+                <button pButton pRipple class="p-button-outlined p-button-warning p-button-sm buttonRadius"
+                routerLink="/index/faturaGirisDuzenle/{{item?.id}}" type="button" icon="pi pi-pencil" iconPos="left"></button>
+                <button pButton pRipple type="button" class="p-button-outlined p-button-danger p-button-sm buttonRadius"
+                  (click)="confirmDialog(product?.id)" icon="pi pi-trash" iconPos="left"></button>
+              </td>
+            </div>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
+    </p-panel>
+  </div>
+</div>

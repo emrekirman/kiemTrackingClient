@@ -1,0 +1,159 @@
+<div class="p-grid p-justify-center">
+  <div class="p-col-12 p-sm-12 p-md-8">
+    <p-panel header="Fatura Giriş Düzenle">
+      <form #faturaGiris="ngForm" (ngSubmit)="kaydet()">
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label for="fisNo">Fiş No: </label>
+            <input id="fisNo" type="text" pInputText disabled [(ngModel)]="fisModel.fisNo"
+              name="fisNo" #fisNo="ngModel" required>
+          </div>
+          <div class="p-field p-col">
+            <label>Fiş Tarih: </label>
+            <p-calendar class="p-inputtext-sm" [(ngModel)]="fisTarih" name="fisTarih" [locale]="en" dateFormat="dd/mm/yy" [showIcon]="true" readonlyInput="true">
+            </p-calendar>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label for="dayanakBelge">Dayanak Belge: </label>
+            <input id="dayanakBelge" name="dayanakBelge"  type="text" pInputText
+              [(ngModel)]="fisModel.dayanakBelge" #dayanakBelge="ngModel" required>
+          </div>
+          <div class="p-field p-col">
+            <label>Dayanak Tarih: </label>
+            <p-calendar class="p-inputtext-sm" name="dayanakTarih" [(ngModel)]="dayanakTarih" [locale]="en" dateFormat="dd/mm/yy" [showIcon]="true" readonlyInput="true">
+            </p-calendar>
+          </div>
+          <div class="p-field p-col">
+            <label for="dayanakNo">Dayanak No: </label>
+            <input id="dayanakNo" type="text" pInputText [(ngModel)]="fisModel.dayanakNo"
+              name="dayanakNo" #dayanakNo="ngModel" required>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label>İşlem Çeşidi: </label>
+            <p-autoComplete class="p-inputtext-sm" [(ngModel)]="fisModel.islemCesidi"
+              [suggestions]="filtreliIslemCesidleri" (completeMethod)="searchIslemCesidi($event)" field="tanim"
+              [dropdown]="true" name="islemCesidi" #islem="ngModel" required>
+              <ng-template let-item pTemplate="item">
+                <div>{{item.tanim}}</div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+          <div class="p-field p-col">
+            <label>Cari: </label>
+            <p-autoComplete class="p-inputtext-sm" [(ngModel)]="fisModel.cariTanim" [suggestions]="filtreliCariler"
+              (completeMethod)="search($event)" field="cariAd" [dropdown]="true" name="cariTamim" #cari="ngModel"
+              required>
+              <ng-template let-item pTemplate="item">
+                <div>{{item.cariAd}}</div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label for="aciklama">Açıklama: </label>
+            <textarea name="aciklama" [rows]="5" pInputTextarea [(ngModel)]="fisModel.aciklama" #aciklama="ngModel"
+              required></textarea>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label>Ürün: </label>
+            <p-autoComplete class="p-inputtext-sm" [(ngModel)]="selectedStok" [suggestions]="filtreliStoklar"
+              (completeMethod)="searchStok($event)" field="tanim" name="selectedStok" #stok="ngModel" required>
+              <ng-template let-item pTemplate="item">
+                <div>{{item.tanim}}</div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+        </div>
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label for="birimFiyat">Birim Fiyat: </label>
+            <input id="birimFiyat" class="p-inputtext-sm" type="number" (change)="tutarHesapla()" pInputText
+              [(ngModel)]="fisHareketModel.birimFiyat" name="birimFiyat" #birimFiyat="ngModel" required>
+          </div>
+          <div class="p-field p-col">
+            <label for="miktar">Miktar: </label>
+            <input id="miktar" class="p-inputtext-sm" type="number" (change)="tutarHesapla()" pInputText
+              [(ngModel)]="fisHareketModel.miktar" name="miktar" #miktar="ngModel" required>
+          </div>
+          <div class="p-field p-col">
+            <label for="tutar">Tutar: </label>
+            <input id="tutar" class="p-inputtext-sm" type="number" pInputText disabled
+              [(ngModel)]="fisHareketModel.tutar" name="tutar">
+          </div>
+          <div class="p-field p-col">
+            <label>Ölçü Birimi: </label>
+            <p-dropdown placeholder="Seçiniz" class="p-inputtext-sm" [options]="olcuBirimler"
+              [(ngModel)]="fisHareketModel.olcuBirim" optionLabel="tanim" [filter]="true" name="olcuBirim"
+              #olcuBirim="ngModel" required></p-dropdown>
+          </div>
+          <div class="p-field p-col" *ngIf="!hareketDuzenle">
+            <label style="color:white;">Ekle</label>
+            <button pButton pRipple type="button" label="Ekle" icon="pi pi-plus" iconPos="left"
+              class="p-button-success p-button-sm" (click)="createFisHareket()" [disabled]="stok.invalid||stok.pristine"></button>
+          </div>
+          <div class="p-field p-col" *ngIf="hareketDuzenle">
+            <label style="color:white;">Kaydet</label>
+            <p-splitButton pRipple label="Kaydet" icon="pi pi-save" [model]="splitMenuItems"
+              styleClass="p-button-warning" (onClick)="updateFisHareket()" [disabled]="stok.invalid"></p-splitButton>
+
+          </div>
+        </div>
+        <div class="p-col-12" *ngIf="fisModel.girisList.length>0">
+          Ürünler
+          <hr>
+          <p-table [value]="fisModel.girisList" styleClass="p-datatable-sm">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Tanım</th>
+                <th>Miktar</th>
+                <th>Ölçü Birim</th>
+                <th>Birim Fiyat</th>
+                <th>Tutar</th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>{{item.stokTanim?.tanim}}</td>
+                <td>{{item.miktar}}</td>
+                <td>{{item.olcuBirim?.tanim}}</td>
+                <td>{{item.birimFiyat}}</td>
+                <td>{{item.tutar}}</td>
+                <td>
+                  <button pButton pRipple class="p-button-outlined p-button-warning p-button-sm"
+                    (click)="fisHareketDuzenle(item)" type="button" icon="pi pi-pencil" iconPos="left"
+                    pTooltip="Düzenle" tooltipPosition="bottom" name="duzenle"></button>
+                  <button pButton pRipple class="p-button-outlined p-button-danger p-button-sm"
+                    (click)="confirmDialog(item.id)" type="button" icon="pi pi-times" iconPos="left" pTooltip="Sil"
+                    tooltipPosition="bottom" name="sil"></button>
+                  <!-- <button pButton pRipple type="button" class="p-button-outlined p-button-danger p-button-sm" (click)="confirmDialog(item?.id)" icon="pi pi-trash" iconPos="left"></button> -->
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <tr>
+                <td colspan="6">
+                  Toplam Tutar: {{fisTutar}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+        <div class="p-col-12" *ngIf="fisModel.girisList.length>0">
+          <button pButton pRipple type="submit" label="Kaydet" icon="pi pi-save" iconPos="left"
+            class="p-button-secondary p-button-sm"
+            pTooltip="Fiş Hareketleri Haricinde Yapılan Değişiklikleri Uygulamak İçin." tooltipPosition="right"
+            [disabled]="faturaGiris.invalid"></button>
+        </div>
+      </form>
+    </p-panel>
+    <p-confirmDialog header="Silme Penceresi" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+  </div>
+</div>

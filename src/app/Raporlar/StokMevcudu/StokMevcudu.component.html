@@ -1,0 +1,31 @@
+<div class="p-grid p-justify-center">
+  <div class="p-col-12">
+    <p-panel header="Stok Mevcudu">
+      <div class="p-grid">
+        <div class="p-col-12">
+          <button pButton pRipple type="button" label="Rapor" icon="pi pi-file-excel" iconPos="left"
+          class="p-button-success p-button-sm"
+          pTooltip="Stok mevcudu raporu excel çıktısı." tooltipPosition="right"
+          (click)="download()"></button>
+        </div>
+      </div>
+      <p-table [value]="data" [paginator]="true" [rows]="maxKayitSayisi" [showCurrentPageReport]="true"
+      currentPageReportTemplate="">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Tanım</th>
+                <th>Stok Kod</th>
+                <th>Miktar</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item.stokTanim}}</td>
+                <td>{{item.stokKod}}</td>
+                <td>{{item.miktar}} {{item.birim}}</td>
+            </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  </div>
+</div>

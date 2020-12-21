@@ -1,0 +1,70 @@
+<p-tabView>
+  <p-tabPanel header="Kullanıcı İşlemleri">
+    <div class="p-grid p-justify-center">
+      <div class="p-col-3">
+        <p-panel header="Kullanıcı Ekle">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="tanim" class="p-col-fixed">Kullanıcı Adı</label>
+              <input id="tanim" type="text" pInputText [(ngModel)]="model.kullaniciAd" required>
+            </div>
+            <div class="p-field">
+              <label for="sifre" class="p-col-fixed">Şifre</label>
+              <input id="sifre" type="password" pInputText [(ngModel)]="model.sifre" required>
+            </div>
+            <div class="p-field">
+              <label for="tanim" class="p-col-fixed">Adı</label>
+              <input id="tanim" type="text" pInputText [(ngModel)]="model.ad" required>
+            </div>
+            <div class="p-field">
+              <label for="tanim" class="p-col-fixed">Soyadı</label>
+              <input id="tanim" type="text" pInputText [(ngModel)]="model.soyad" required>
+            </div>
+            <div class="p-field">
+              <label class="p-col-fixed">Yetki</label>
+              <p-dropdown [options]="yetkiler" (onChange)="degis()" [(ngModel)]="yetkiModel" optionLabel="tanim" [filter]="true"></p-dropdown>
+            </div>
+            <div class="p-field">
+              <button pButton pRipple type="button" (click)="kullaniciEkle()" icon="pi pi-plus" label="Ekle"
+                iconPos="left"></button>
+            </div>
+          </div>
+        </p-panel>
+      </div>
+      <div class="p-col-9">
+        <p-panel header="Kullanıcı Listesi">
+          <p-table [value]="data">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Kullanıcı Adı</th>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Yetki</th>
+                <th>Eklenme Tarihi</th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>{{item?.kullaniciAd}}</td>
+                <td>{{item?.ad}}</td>
+                <td>{{item?.soyad}}</td>
+                <td>{{item?.yetki.tanim}}</td>
+                <td>{{item?.eklenmeTarih | date:'d.MM.yyyy'}}</td>
+                <td>
+                  <button pButton pRipple class="p-button-outlined p-button-warning p-button-sm"
+                    (click)="dialogAc(item?.id)" type="button" icon="pi pi-pencil" iconPos="left"></button>
+                  <button pButton pRipple type="button" class="p-button-outlined p-button-danger p-button-sm"
+                    (click)="confirmDialog(item?.id)" icon="pi pi-trash" iconPos="left"></button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-panel>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Kullanıcı İşlem Hareket">
+    asdasd
+  </p-tabPanel>
+</p-tabView>
