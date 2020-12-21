@@ -1,1 +1,1 @@
-# kiemTracking Java uygulamasının Angular ile yazılmış client projesi
+# Client project of kiemTracking Java application written in Angular
